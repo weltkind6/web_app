@@ -1,15 +1,16 @@
 import React from 'react';
 import './CartMenu.css'
 import {useDispatch} from "react-redux";
-import {deleteItemFromCart} from "../../../redux/cart/reducer";
+import {deleteItemFromCart, removeAllProducts} from "../../../redux/cart/reducer";
 
 const CartMenu = ({items}) => {
     const finalPrice = (items.reduce((acc, value) => acc + value.totalPrice, 0))
     const dispatch = useDispatch()
-    const [id] = items
-    console.log(items)
-    const deleteItemHandler = (currentID) => {
+    const deleteItemHandler = currentID => {
         dispatch(deleteItemFromCart(currentID))
+    }
+    const clearBasketHandler = () => {
+       dispatch(removeAllProducts())
     }
 
     return (
@@ -21,13 +22,16 @@ const CartMenu = ({items}) => {
                             <div
                                 key={id}
                                 style={{border: '1px solid red', cursor: 'pointer'}}
-                                onClick={() => deleteItemHandler(id)}
                             >
                                 {title}{totalPrice}
-                                <button className="button">-</button>
+                                <button
+                                    className="button"
+                                    onClick={() => deleteItemHandler(id)}
+                                >-
+                                </button>
                             </div>)}
                         <h5>К оплате: {finalPrice}</h5>
-                        <button>Очистить корзину</button>
+                        <button onClick={clearBasketHandler}>Очистить корзину</button>
                     </div>
                 }
             </div>

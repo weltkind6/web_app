@@ -4,7 +4,6 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         itemsInCart: [],
-        isCartClear: true
     },
     reducers: {
         setItemsInCart: (state, action) => {
@@ -13,11 +12,12 @@ const cartSlice = createSlice({
         deleteItemFromCart: (state, action) => {
             state.itemsInCart = state.itemsInCart.filter(item => item.id !== action.payload)
         },
-        setClearCart: (state, action) => {
-            state.isCartClear = state.isCartClear === action.payload
+        removeAllProducts: (state, action) => {
+            state.itemsInCart = state.itemsInCart = []
         }
+
     }
 })
 
-export const {setItemsInCart, deleteItemFromCart, setClearCart} = cartSlice.actions
+export const {setItemsInCart, deleteItemFromCart, removeAllProducts} = cartSlice.actions
 export default cartSlice.reducer
